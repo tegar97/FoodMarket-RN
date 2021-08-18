@@ -2,8 +2,10 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import SplashScreen from '../pages/SplashScreen';
 import {
+  FoodDetail,
   Home,
   Order,
+  OrderSummary,
   Profile,
   SignIn,
   SignUp,
@@ -65,6 +67,16 @@ const Router = () => {
       <Stack.Screen
         name="MainApp"
         component={MainApp}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="FoodDetail"
+        component={FoodDetail}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="OrderSummary"
+        component={OrderSummary}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

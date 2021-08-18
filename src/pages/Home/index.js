@@ -1,46 +1,45 @@
 import React from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
-import {ProfileDummy} from '../../assets';
+import {StyleSheet, View, ScrollView} from 'react-native';
+import {FoodDummy1, FoodDummy2, FoodDummy3} from '../../assets';
+import {FoodCard, Gap, HomeProfile, HomeTabsSection} from '../../component';
 
 const Home = () => {
-  const {profile, profileContainer, desc, appName} = styles;
+  const {FoodCardContainer, page, tabContainer} = styles;
   return (
-    <View>
-      <View style={profileContainer}>
+    <ScrollView contentContainerStyle={{flexGrow: 1}}>
+      <View style={page}>
+        <HomeProfile />
         <View>
-          <Text style={appName}>FoodMarket</Text>
-          <Text style={desc}>Let's get some foods</Text>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <View style={FoodCardContainer}>
+              <Gap width={24} />
+              <FoodCard image={FoodDummy1} />
+              <FoodCard image={FoodDummy2} />
+              <FoodCard image={FoodDummy3} />
+              <Gap width={24} />
+            </View>
+          </ScrollView>
         </View>
-        <Image source={ProfileDummy} style={profile} />
+        <View style={tabContainer}>
+          <HomeTabsSection />
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
 export default Home;
 
 const styles = StyleSheet.create({
-  profileContainer: {
+  page: {
+    flex: 1,
+  },
+
+  FoodCardContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 24,
-    paddingTop: 32,
-    paddingBottom: 24,
-    backgroundColor: 'white',
+    marginVertical: 12,
   },
-  profile: {
-    width: 50,
-    height: 50,
-    borderRadius: 8,
-  },
-  appName: {
-    fontSize: 22,
-    fontFamily: 'Poppins-Medium',
-    color: '#020202',
-  },
-  desc: {
-    fontSize: 14,
-    fontFamily: 'Poppins-Light',
-    color: '#8d92a3',
+  tabContainer: {
+    flex: 1,
   },
 });
