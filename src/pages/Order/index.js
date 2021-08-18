@@ -1,14 +1,20 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
+import EmptyOrder from '../../component/molecules/EmptyOrder';
 
 const Order = () => {
   return (
-    <View>
-      <Text>Order Screen</Text>
+    <View style={styles.page}>
+      <EmptyOrder />
     </View>
   );
 };
 
 export default Order;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  page: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+});
