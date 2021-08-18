@@ -1,16 +1,35 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {Button, Gap, Header, TextInput} from '../../component';
+import {useForm} from '../../utils';
 
 const SignIn = ({navigation}) => {
   const {page, container} = styles;
+  // const [email, setEmail] = useState('');
+  // const [password, setPassword] = useState('');
+  const [form, setForm] = useForm({
+    email: '',
+    password: '',
+  });
+
   return (
     <View style={page}>
       <Header title="Sign in" subTitle="Find Your Best ever meal" />
       <View style={container}>
-        <TextInput placeholder="Type Your Email Adress" label="Email Adress" />
+        <TextInput
+          placeholder="Type Your Email Adress"
+          label="Email Adress"
+          value={form.email}
+          onChangeText={value => setForm('email', value)}
+        />
         <Gap height={16} />
-        <TextInput placeholder="Type Your Password" label="Password" />
+        <TextInput
+          placeholder="Type Your Password"
+          label="Password"
+          value={form.password}
+          onChangeText={value => setForm('password', value)}
+          secureTextEntry
+        />
         <Gap height={24} />
         <Button text="Sign In" color="#FFC700" />
         <Gap height={13} />
