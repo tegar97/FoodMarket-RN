@@ -5,8 +5,10 @@ import Header from './Header';
 import HomeProfile from './HomeProfile';
 import HomeTabsSection from './HomeTabsSection';
 import ItemListFood from './ItemListFood';
+import ItemListMenu from './ItemListMenu';
 import ItemValue from './ItemValue';
 import OrderTabSection from './OrderTabsSection';
+import ProfileTabSection from './ProfileTabSection';
 import Rating from './Rating';
 
 export {
@@ -20,4 +22,6 @@ export {
   Counter,
   ItemValue,
   OrderTabSection,
+  ProfileTabSection,
+  ItemListMenu,
 };
