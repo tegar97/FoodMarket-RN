@@ -3,17 +3,90 @@ import React from 'react';
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import Rating from '../Rating';
 
-const ItemListFood = ({image, onPress, items, rating}) => {
+/*
+
+TYPE :
+1.PRODUCT
+2.order-summary
+3.in progress
+4.past order
+*/
+const ItemListFood = ({
+  image,
+  onPress,
+  items,
+  rating,
+  price,
+  type,
+  name,
+  date,
+  status,
+}) => {
+  const renderContent = () => {
+    switch (type) {
+      case 'product':
+        return (
+          <React.Fragment>
+            <View style={styles.content}>
+              <Text style={styles.title}>{name}</Text>
+              <Text style={styles.price}>IDR {price}</Text>
+            </View>
+            <Rating rating={rating} />
+          </React.Fragment>
+        );
+      case 'order-summary':
+        return (
+          <React.Fragment>
+            <View style={styles.content}>
+              <Text style={styles.title}>{name}</Text>
+              <Text style={styles.price}>IDR {price}</Text>
+            </View>
+            <Text style={styles.items}>{items} items</Text>
+          </React.Fragment>
+        );
+      case 'in-progress':
+        return (
+          <React.Fragment>
+            <View style={styles.content}>
+              <Text style={styles.title}>{name}</Text>
+              <Text style={styles.price}>
+                {items} items.IDR {price}{' '}
+              </Text>
+            </View>
+          </React.Fragment>
+        );
+      case 'past-orders':
+        return (
+          <React.Fragment>
+            <View style={styles.content}>
+              <Text style={styles.title}>{name}</Text>
+              <Text style={styles.price}>
+                {items} items.IDR {price}{' '}
+              </Text>
+            </View>
+            <View>
+              <Text style={styles.date}>{date}</Text>
+              <Text style={styles.status}>{status}</Text>
+            </View>
+          </React.Fragment>
+        );
+      default:
+        return (
+          <React.Fragment>
+            <View style={styles.content}>
+              <Text style={styles.title}>{name}</Text>
+              <Text style={styles.price}>IDR {price}</Text>
+            </View>
+            <Rating />
+          </React.Fragment>
+        );
+    }
+  };
   return (
     <TouchableOpacity activeOpacity={0.7} onPress={onPress}>
       <View style={styles.container}>
         <Image source={image} style={styles.image} />
-        <View style={styles.content}>
-          <Text style={styles.title}>Soup Bumil</Text>
-          <Text style={styles.price}>IDR 289.00</Text>
-        </View>
-        {items && !rating && <Text style={styles.items}>{items} items</Text>}
-        {rating && !items && <Rating />}
+        {renderContent()}
       </View>
     </TouchableOpacity>
   );
@@ -52,5 +125,15 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontFamily: 'Poppins-Regular',
     color: '#020202',
+  },
+  date: {
+    fontSize: 13,
+    fontFamily: 'Poppins-Regular',
+    color: '#020202',
+  },
+  status: {
+    fontSize: 10,
+    fontFamily: 'Poppins-Regular',
+    color: '#D9435E',
   },
 });

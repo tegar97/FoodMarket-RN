@@ -14,7 +14,13 @@ const OrderSummary = ({navigation}) => {
         />
         <View style={styles.content}>
           <Text style={styles.label}>Order Summary</Text>
-          <ItemListFood image={FoodDummy1} />
+          <ItemListFood
+            image={FoodDummy1}
+            type="order-summary"
+            name="Sop Bumil"
+            price="300.000"
+            items={13}
+          />
           <Text style={styles.label}>Detail Transaction</Text>
           <ItemValue label="Cherry Healthy" value="IDR 18.390.00" />
           <ItemValue label="Driver" value="value" />

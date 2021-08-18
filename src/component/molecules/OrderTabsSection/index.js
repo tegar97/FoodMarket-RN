@@ -38,67 +38,119 @@ const renderTabBar = props => (
     )}
   />
 );
-const NewTaste = () => {
+const InProgress = () => {
   const navigation = useNavigation();
   return (
     <ScrollView>
       <View style={{paddingTop: 8, paddingHorizontal: 24}}>
         <ItemListFood
-          type="product"
-          name="sop bumil"
-          price="300.000"
           image={FoodDummy1}
           rating={3}
           onPress={() => navigation.navigate('FoodDetail')}
+          type="past-orders"
+          items={3}
+          price="2.000.000"
+          name="Sop bumil"
         />
         <ItemListFood
-          type="product"
-          name="sop bumil"
-          price="300.000"
           image={FoodDummy2}
           rating={3}
           onPress={() => navigation.navigate('FoodDetail')}
+          type="in-progress"
+          items={3}
+          price="2.000.000"
+          name="Sop bumil"
         />
         <ItemListFood
-          type="product"
-          name="sop bumil"
-          price="300.000"
           image={FoodDummy3}
           rating={3}
           onPress={() => navigation.navigate('FoodDetail')}
+          type="in-progress"
+          items={3}
+          price="2.000.000"
+          name="Sop bumil"
         />
         <ItemListFood
-          type="product"
-          name="sop bumil"
-          price="300.000"
           image={FoodDummy3}
           rating={3}
           onPress={() => navigation.navigate('FoodDetail')}
+          type="in-progress"
+          items={3}
+          price="2.000.000"
+          name="Sop bumil"
         />
       </View>
     </ScrollView>
   );
 };
 
-const SecondRoute = () => (
-  <View style={{flex: 1, backgroundColor: '#673ab7'}} />
-);
+const PastOrder = () => {
+  const navigation = useNavigation();
+
+  return (
+    <ScrollView>
+      <View style={{paddingTop: 8, paddingHorizontal: 24}}>
+        <ItemListFood
+          image={FoodDummy1}
+          rating={3}
+          onPress={() => navigation.navigate('FoodDetail')}
+          type="past-orders"
+          items={3}
+          price="2.000.000"
+          name="Sop bumil"
+          date="jun 12 , 14:00"
+        />
+        <ItemListFood
+          image={FoodDummy2}
+          rating={3}
+          onPress={() => navigation.navigate('FoodDetail')}
+          type="past-orders"
+          items={3}
+          price="2.000.000"
+          name="Sop bumil"
+          date="jun 11 , 11:00"
+          status="Cancel"
+        />
+        <ItemListFood
+          image={FoodDummy3}
+          rating={3}
+          onPress={() => navigation.navigate('FoodDetail')}
+          type="past-orders"
+          items={3}
+          price="2.000.000"
+          name="Sop bumil"
+          date="jun 11 , 11:00"
+          status="Cancel"
+        />
+        <ItemListFood
+          image={FoodDummy3}
+          rating={3}
+          onPress={() => navigation.navigate('FoodDetail')}
+          type="past-orders"
+          items={3}
+          price="2.000.000"
+          date="jun 15 , 11:00"
+          status="Cancel"
+          name="Sop bumil"
+        />
+      </View>
+    </ScrollView>
+  );
+};
 
 const renderScene = SceneMap({
-  1: NewTaste,
-  2: SecondRoute,
-  3: NewTaste,
+  1: InProgress,
+  2: PastOrder,
 });
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 
-const HomeTabsSection = () => {
+const OrderTabSection = () => {
   const layout = useWindowDimensions();
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    {key: '1', title: 'New Taste'},
-    {key: '2', title: 'Popular'},
-    {key: '3', title: 'Recommended'},
+    {key: '1', title: 'In Progress'},
+    {key: '2', title: 'Past Order'},
   ]);
   return (
     <TabView
@@ -112,6 +164,6 @@ const HomeTabsSection = () => {
   );
 };
 
-export default HomeTabsSection;
+export default OrderTabSection;
 
 const styles = StyleSheet.create({});

@@ -6,6 +6,7 @@ import HomeProfile from './HomeProfile';
 import HomeTabsSection from './HomeTabsSection';
 import ItemListFood from './ItemListFood';
 import ItemValue from './ItemValue';
+import OrderTabSection from './OrderTabsSection';
 import Rating from './Rating';
 
 export {
@@ -18,4 +19,5 @@ export {
   Rating,
   Counter,
   ItemValue,
+  OrderTabSection,
 };
