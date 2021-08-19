@@ -1,6 +1,8 @@
+import Axios from 'axios';
 import React from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import {showMessage} from 'react-native-flash-message';
+import {useSelector} from 'react-redux';
 import {Button, Gap, Header, Select, TextInput} from '../../component';
 import {useForm} from '../../utils';
 
@@ -19,8 +21,23 @@ const SignUpAdress = ({navigation}) => {
       ...registerReducer,
       ...form,
     };
-    console.log('DATA REGISTER', data);
-    // navigation.replace('SuccessSignUp')
+    Axios.post('http://10.0.2.2:8000/api/register', data)
+      .then(res => {
+        showMessage('Register Success', 'success');
+
+        navigation.replace('SuccessSignUp');
+      })
+      .catch(err => {
+        console.log('error', err.response.data);
+        showToast(err?.response?.data?.message);
+      });
+  };
+
+  const showToast = (message, type) => {
+    showMessage({
+      message: message,
+      type: type === 'success' ? '#1ABC9C' : '#D9435E',
+    });
   };
 
   return (
