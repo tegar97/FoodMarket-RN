@@ -2,7 +2,7 @@ import Axios from 'axios';
 import React from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {showMessage} from 'react-native-flash-message';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {Button, Gap, Header, Select, TextInput} from '../../component';
 import {useForm} from '../../utils';
 
@@ -15,20 +15,24 @@ const SignUpAdress = ({navigation}) => {
     houseNumber: '',
     city: 'Bandung',
   });
+  const dispatch = useDispatch();
   const onSubmit = () => {
     console.log(form);
     const data = {
       ...registerReducer,
       ...form,
     };
+    dispatch({type: 'SET_LOADING', value: true});
     Axios.post('http://10.0.2.2:8000/api/register', data)
       .then(res => {
         showMessage('Register Success', 'success');
+        dispatch({type: 'SET_LOADING', value: false});
 
         navigation.replace('SuccessSignUp');
       })
       .catch(err => {
-        console.log('error', err.response.data);
+        dispatch({type: 'SET_LOADING', value: false});
+
         showToast(err?.response?.data?.message);
       });
   };
