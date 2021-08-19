@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {Button, Gap, Header, TextInput} from '../../component';
 import {useForm} from '../../utils';
-
+import Axios from 'axios';
 const SignIn = ({navigation}) => {
   const {page, container} = styles;
   // const [email, setEmail] = useState('');
@@ -11,6 +11,17 @@ const SignIn = ({navigation}) => {
     email: '',
     password: '',
   });
+
+  const onSubmit = () => {
+    console.log(form);
+    Axios.post('http://10.0.2.2:8000/api/login', form)
+      .then(res => {
+        console.log('success', res);
+      })
+      .catch(err => {
+        console.log('err', err);
+      });
+  };
 
   return (
     <View style={page}>
@@ -31,7 +42,7 @@ const SignIn = ({navigation}) => {
           secureTextEntry
         />
         <Gap height={24} />
-        <Button text="Sign In" color="#FFC700" />
+        <Button text="Sign In" onPress={() => onSubmit()} color="#FFC700" />
         <Gap height={13} />
         <Button
           text="Create new Account "

@@ -1,15 +1,16 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
+import {useSelector} from 'react-redux';
 import {Button, Gap, Header, TextInput} from '../../component';
 
 const SignUp = ({navigation}) => {
   const {page, container, photoContainer, addPhoto, borderPhoto, photo} =
     styles;
-
+  const globalState = useSelector(state => state.globalReducer);
+  console.log('global', globalState);
   return (
     <View styles={page}>
       <Header title="Sign Up" subTitle="Register and eat" onBack={true} />
-
       <View style={container}>
         <View style={photo}>
           <View style={borderPhoto}>
@@ -20,6 +21,7 @@ const SignUp = ({navigation}) => {
         </View>
         <TextInput placeholder="Type Your Full Name" label="Full Name" />
         <Gap height={16} />
+
         <TextInput
           placeholder="Type Your Email Address "
           label=" Email Address "
