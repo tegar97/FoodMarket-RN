@@ -1,14 +1,14 @@
 import Axios from 'axios';
 import React from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
-import {showMessage} from 'react-native-flash-message';
 import {useDispatch, useSelector} from 'react-redux';
 import {Button, Gap, Header, Select, TextInput} from '../../component';
-import {useForm} from '../../utils';
+import {setLoading, signUpAction} from '../../redux/action';
+import {showMessage, useForm} from '../../utils';
 
 const SignUpAdress = ({navigation}) => {
   const {page, container} = styles;
-  const registerReducer = useSelector(state => state.registerReducer);
+  const {registerReducer, photoReducer} = useSelector(state => state);
   const [form, setForm] = useForm({
     phoneNumber: '',
     address: '',
@@ -22,26 +22,39 @@ const SignUpAdress = ({navigation}) => {
       ...registerReducer,
       ...form,
     };
-    dispatch({type: 'SET_LOADING', value: true});
+    dispatch(setLoading(true));
+    // dispatch(signUpAction(data, photoReducer, navigation));
     Axios.post('http://10.0.2.2:8000/api/register', data)
       .then(res => {
+        console.log(res);
+        if (photoReducer.isUploadPhoto) {
+          const photoForUpload = new FormData();
+          photoForUpload.append('file', photoReducer);
+          Axios.post('http://10.0.2.2:8000/api/user/photo', photoForUpload, {
+            headers: {
+              Authorization: `${res.data.data.token_type} ${res.data.data.access_token}`,
+              'Content-Type': 'multipart/form-data',
+            },
+          })
+            .then(resUpload => {
+              console.log('Success upload', resUpload);
+            })
+            .catch(err => {
+              dispatch(setLoading(false));
+              console.log('error', err);
+              // showMessage('err', err?.response?.data?.message);
+            });
+        }
         showMessage('Register Success', 'success');
-        dispatch({type: 'SET_LOADING', value: false});
+        dispatch(setLoading(false));
 
         navigation.replace('SuccessSignUp');
       })
       .catch(err => {
-        dispatch({type: 'SET_LOADING', value: false});
-
-        showToast(err?.response?.data?.message);
+        dispatch(setLoading(false));
+        console.log(err.response);
+        showMessage('err', err?.response?.data?.message);
       });
-  };
-
-  const showToast = (message, type) => {
-    showMessage({
-      message: message,
-      type: type === 'success' ? '#1ABC9C' : '#D9435E',
-    });
   };
 
   return (
