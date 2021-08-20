@@ -23,38 +23,38 @@ const SignUpAdress = ({navigation}) => {
       ...form,
     };
     dispatch(setLoading(true));
-    // dispatch(signUpAction(data, photoReducer, navigation));
-    Axios.post('http://10.0.2.2:8000/api/register', data)
-      .then(res => {
-        console.log(res);
-        if (photoReducer.isUploadPhoto) {
-          const photoForUpload = new FormData();
-          photoForUpload.append('file', photoReducer);
-          Axios.post('http://10.0.2.2:8000/api/user/photo', photoForUpload, {
-            headers: {
-              Authorization: `${res.data.data.token_type} ${res.data.data.access_token}`,
-              'Content-Type': 'multipart/form-data',
-            },
-          })
-            .then(resUpload => {
-              console.log('Success upload', resUpload);
-            })
-            .catch(err => {
-              dispatch(setLoading(false));
-              console.log('error', err);
-              // showMessage('err', err?.response?.data?.message);
-            });
-        }
-        showMessage('Register Success', 'success');
-        dispatch(setLoading(false));
+    dispatch(signUpAction(data, photoReducer, navigation));
+    // Axios.post('http://10.0.2.2:8000/api/register', data)
+    //   .then(res => {
+    //     console.log(res);
+    //     if (photoReducer.isUploadPhoto) {
+    //       const photoForUpload = new FormData();
+    //       photoForUpload.append('file', photoReducer);
+    //       Axios.post('http://10.0.2.2:8000/api/user/photo', photoForUpload, {
+    //         headers: {
+    //           Authorization: `${res.data.data.token_type} ${res.data.data.access_token}`,
+    //           'Content-Type': 'multipart/form-data',
+    //         },
+    //       })
+    //         .then(resUpload => {
+    //           console.log('Success upload', resUpload);
+    //         })
+    //         .catch(err => {
+    //           dispatch(setLoading(false));
+    //           console.log('error', err);
+    //           // showMessage('err', err?.response?.data?.message);
+    //         });
+    //     }
+    //     showMessage('Register Success', 'success');
+    //     dispatch(setLoading(false));
 
-        navigation.replace('SuccessSignUp');
-      })
-      .catch(err => {
-        dispatch(setLoading(false));
-        console.log(err.response);
-        showMessage('err', err?.response?.data?.message);
-      });
+    //     navigation.replace('SuccessSignUp');
+    //   })
+    //   .catch(err => {
+    //     dispatch(setLoading(false));
+    //     console.log(err.response);
+    //     showMessage('err', err?.response?.data?.message);
+    //   });
   };
 
   return (
