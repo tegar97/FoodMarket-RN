@@ -11,7 +11,7 @@ import {Button, Counter, Number, Rating} from '../../component';
 import {getData} from '../../utils';
 
 const FoodDetail = ({navigation, route}) => {
-  const {name, picturePath, description, rate, ingredients, price} =
+  const {id, name, picturePath, description, rate, ingredients, price} =
     route.params;
   const [totalItem, setTotalItem] = useState(1);
   const [userProfile, setUserProfile] = useState({});
@@ -33,6 +33,7 @@ const FoodDetail = ({navigation, route}) => {
 
     const data = {
       item: {
+        id,
         name,
         price,
         picturePath,
