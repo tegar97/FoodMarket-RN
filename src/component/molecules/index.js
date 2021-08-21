@@ -8,6 +8,7 @@ import ItemListFood from './ItemListFood';
 import ItemListMenu from './ItemListMenu';
 import ItemValue from './ItemValue';
 import Loading from './Loading';
+import Number from './Number';
 import OrderTabSection from './OrderTabsSection';
 import ProfileTabSection from './ProfileTabSection';
 import Rating from './Rating';
@@ -26,4 +27,5 @@ export {
   ProfileTabSection,
   ItemListMenu,
   Loading,
+  Number,
 };

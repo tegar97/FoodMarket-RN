@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -40,56 +40,98 @@ const renderTabBar = props => (
 );
 const NewTaste = () => {
   const navigation = useNavigation();
+  const {newTaste} = useSelector(state => state.homeReducer);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getFoodDataByTypes('new_food'));
+  }, [dispatch]);
   return (
     <ScrollView>
       <View style={{paddingTop: 8, paddingHorizontal: 24}}>
-        <ItemListFood
-          type="product"
-          name="sop bumil"
-          price="300.000"
-          image={FoodDummy1}
-          rating={3}
-          onPress={() => navigation.navigate('FoodDetail')}
-        />
-        <ItemListFood
-          type="product"
-          name="sop bumil"
-          price="300.000"
-          image={FoodDummy2}
-          rating={3}
-          onPress={() => navigation.navigate('FoodDetail')}
-        />
-        <ItemListFood
-          type="product"
-          name="sop bumil"
-          price="300.000"
-          image={FoodDummy3}
-          rating={3}
-          onPress={() => navigation.navigate('FoodDetail')}
-        />
-        <ItemListFood
-          type="product"
-          name="sop bumil"
-          price="300.000"
-          image={FoodDummy3}
-          rating={3}
-          onPress={() => navigation.navigate('FoodDetail')}
-        />
+        {newTaste.map(item => {
+          return (
+            <ItemListFood
+              key={item.id}
+              type="product"
+              name={item.name}
+              price={item.price}
+              image={{uri: `http://10.0.2.2:8000/storage/${item.picturePath}`}}
+              rating={item.rate}
+              onPress={() => navigation.navigate('FoodDetail')}
+            />
+          );
+        })}
       </View>
     </ScrollView>
   );
 };
 
-const SecondRoute = () => (
-  <View style={{flex: 1, backgroundColor: '#673ab7'}} />
-);
+const Popular = () => {
+  const navigation = useNavigation();
+  const {popular} = useSelector(state => state.homeReducer);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getFoodDataByTypes('newTaste'));
+  }, [dispatch]);
+  return (
+    <ScrollView>
+      <View style={{paddingTop: 8, paddingHorizontal: 24}}>
+        {popular.map(item => {
+          return (
+            <ItemListFood
+              key={item.id}
+              type="product"
+              name={item.name}
+              price={item.price}
+              image={{uri: `http://10.0.2.2:8000/storage/${item.picturePath}`}}
+              rating={item.rate}
+              onPress={() => navigation.navigate('FoodDetail')}
+            />
+          );
+        })}
+      </View>
+    </ScrollView>
+  );
+};
+const Recommended = () => {
+  const navigation = useNavigation();
+  const {recommended} = useSelector(state => state.homeReducer);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getFoodDataByTypes('recommended'));
+  }, [dispatch]);
+  return (
+    <ScrollView>
+      <View style={{paddingTop: 8, paddingHorizontal: 24}}>
+        {recommended.map(item => {
+          return (
+            <ItemListFood
+              key={item.id}
+              type="product"
+              name={item.name}
+              price={item.price}
+              image={{uri: `http://10.0.2.2:8000/storage/${item.picturePath}`}}
+              rating={item.rate}
+              onPress={() => navigation.navigate('FoodDetail')}
+            />
+          );
+        })}
+      </View>
+    </ScrollView>
+  );
+};
 
 const renderScene = SceneMap({
   1: NewTaste,
-  2: SecondRoute,
-  3: NewTaste,
+  2: Popular,
+  3: Recommended,
 });
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
+import {useDispatch, useSelector} from 'react-redux';
+import {getFoodDataByTypes} from '../../../redux/action';
 
 const HomeTabsSection = () => {
   const layout = useWindowDimensions();

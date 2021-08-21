@@ -1,6 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
+import Number from '../Number';
 import Rating from '../Rating';
 
 /*
@@ -29,9 +30,9 @@ const ItemListFood = ({
           <React.Fragment>
             <View style={styles.content}>
               <Text style={styles.title}>{name}</Text>
-              <Text style={styles.price}>IDR {price}</Text>
+              <Number number={price} />
             </View>
-            <Rating rating={rating} />
+            <Rating number={rating} />
           </React.Fragment>
         );
       case 'order-summary':
