@@ -30,7 +30,7 @@ const ItemListFood = ({
           <React.Fragment>
             <View style={styles.content}>
               <Text style={styles.title}>{name}</Text>
-              <Number number={price} />
+              <Number number={price} style={styles.price} />
             </View>
             <Rating number={rating} />
           </React.Fragment>
@@ -40,7 +40,7 @@ const ItemListFood = ({
           <React.Fragment>
             <View style={styles.content}>
               <Text style={styles.title}>{name}</Text>
-              <Text style={styles.price}>IDR {price}</Text>
+              <Number number={price} style={styles.price} />
             </View>
             <Text style={styles.items}>{items} items</Text>
           </React.Fragment>
@@ -50,9 +50,7 @@ const ItemListFood = ({
           <React.Fragment>
             <View style={styles.content}>
               <Text style={styles.title}>{name}</Text>
-              <Text style={styles.price}>
-                {items} items.IDR {price}{' '}
-              </Text>
+              <Number number={price} style={styles.price} />
             </View>
           </React.Fragment>
         );
@@ -61,9 +59,7 @@ const ItemListFood = ({
           <React.Fragment>
             <View style={styles.content}>
               <Text style={styles.title}>{name}</Text>
-              <Text style={styles.price}>
-                {items} items.IDR {price}{' '}
-              </Text>
+              <Number number={price} style={styles.price} />
             </View>
             <View>
               <Text style={styles.date}>{date}</Text>
@@ -76,7 +72,7 @@ const ItemListFood = ({
           <React.Fragment>
             <View style={styles.content}>
               <Text style={styles.title}>{name}</Text>
-              <Text style={styles.price}>IDR {price}</Text>
+              <Number number={price} style={styles.price} />
             </View>
             <Rating />
           </React.Fragment>

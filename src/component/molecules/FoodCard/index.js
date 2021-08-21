@@ -1,9 +1,9 @@
 import React from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import {FoodDummy1, IcStarOff, IcStarOn} from '../../../assets';
 import Rating from '../Rating';
 
-const FoodCard = ({image, name, rating}) => {
+const FoodCard = ({image, name, rating, onPress}) => {
   const {
     container,
     text,
@@ -13,13 +13,15 @@ const FoodCard = ({image, name, rating}) => {
   } = styles;
 
   return (
-    <View style={container}>
-      <Image style={imageStyle} source={image} />
-      <View style={content}>
-        <Text style={text}>{name}</Text>
-        <Rating number={rating} />
+    <TouchableOpacity onPress={onPress} activeOpacity={0.4}>
+      <View style={container}>
+        <Image style={imageStyle} source={image} />
+        <View style={content}>
+          <Text style={text}>{name}</Text>
+          <Rating number={rating} />
+        </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

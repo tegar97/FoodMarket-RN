@@ -5,7 +5,7 @@ import {FoodDummy1, FoodDummy2, FoodDummy3} from '../../assets';
 import {FoodCard, Gap, HomeProfile, HomeTabsSection} from '../../component';
 import {getFoodData} from '../../redux/action';
 
-const Home = () => {
+const Home = ({navigation}) => {
   const {FoodCardContainer, page, tabContainer} = styles;
   const {food} = useSelector(state => state.homeReducer);
   const dispatch = useDispatch();
@@ -26,6 +26,7 @@ const Home = () => {
                     key={itemFood.id}
                     name={itemFood.name}
                     rating={itemFood.rate}
+                    onPress={() => navigation.navigate('FoodDetail', itemFood)}
                     image={{
                       uri: `http://10.0.2.2:8000/storage/${itemFood.picturePath}`,
                     }}

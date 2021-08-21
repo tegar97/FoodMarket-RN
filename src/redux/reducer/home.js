@@ -27,7 +27,7 @@ export const homeReducer = (state = initHome, action) => {
   if (action.type === 'SET_RECOMMENDED') {
     return {
       ...state,
-      food: action.value,
+      recommended: action.value,
     };
   }
   return state;

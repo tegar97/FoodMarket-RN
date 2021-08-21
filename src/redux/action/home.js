@@ -14,7 +14,6 @@ export const getFoodData = () => dispatch => {
 export const getFoodDataByTypes = types => dispatch => {
   Axios.get(`${API_HOST.url}/food?types=${types}`)
     .then(res => {
-      console.log(res);
       if (types === 'newTaste') {
         dispatch({type: 'SET_NEW_TASTE', value: res.data.data.data});
       }

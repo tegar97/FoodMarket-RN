@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useEffect} from 'react';
 import {
@@ -44,8 +45,8 @@ const NewTaste = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getFoodDataByTypes('new_food'));
-  }, [dispatch]);
+    dispatch(getFoodDataByTypes('newTaste'));
+  }, []);
   return (
     <ScrollView>
       <View style={{paddingTop: 8, paddingHorizontal: 24}}>
@@ -58,7 +59,7 @@ const NewTaste = () => {
               price={item.price}
               image={{uri: `http://10.0.2.2:8000/storage/${item.picturePath}`}}
               rating={item.rate}
-              onPress={() => navigation.navigate('FoodDetail')}
+              onPress={() => navigation.navigate('FoodDetail', item)}
             />
           );
         })}
@@ -73,8 +74,8 @@ const Popular = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getFoodDataByTypes('newTaste'));
-  }, [dispatch]);
+    dispatch(getFoodDataByTypes('popular'));
+  }, []);
   return (
     <ScrollView>
       <View style={{paddingTop: 8, paddingHorizontal: 24}}>
@@ -87,7 +88,7 @@ const Popular = () => {
               price={item.price}
               image={{uri: `http://10.0.2.2:8000/storage/${item.picturePath}`}}
               rating={item.rate}
-              onPress={() => navigation.navigate('FoodDetail')}
+              onPress={() => navigation.navigate('FoodDetail', item)}
             />
           );
         })}
@@ -102,7 +103,7 @@ const Recommended = () => {
 
   useEffect(() => {
     dispatch(getFoodDataByTypes('recommended'));
-  }, [dispatch]);
+  }, []);
   return (
     <ScrollView>
       <View style={{paddingTop: 8, paddingHorizontal: 24}}>
@@ -115,7 +116,7 @@ const Recommended = () => {
               price={item.price}
               image={{uri: `http://10.0.2.2:8000/storage/${item.picturePath}`}}
               rating={item.rate}
-              onPress={() => navigation.navigate('FoodDetail')}
+              onPress={() => navigation.navigate('FoodDetail', item)}
             />
           );
         })}
