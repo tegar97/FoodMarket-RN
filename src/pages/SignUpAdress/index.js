@@ -17,7 +17,7 @@ const SignUpAdress = ({navigation}) => {
   });
   const dispatch = useDispatch();
   const onSubmit = () => {
-    console.log(form);
+    console.log(photoReducer);
     const data = {
       ...registerReducer,
       ...form,
@@ -60,7 +60,11 @@ const SignUpAdress = ({navigation}) => {
   return (
     <ScrollView contentContainerStyle={{flexGrow: 1}}>
       <View styles={page}>
-        <Header title="Adress" subTitle="Make sure it valid!" onBack={true} />
+        <Header
+          title="Adress"
+          subTitle="Make sure it valid!"
+          onBack={() => navigation.goBack()}
+        />
 
         <View style={container}>
           <TextInput

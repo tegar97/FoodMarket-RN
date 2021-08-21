@@ -10,13 +10,15 @@ import {
   View,
   Image,
 } from 'react-native';
+import {showMessage} from 'react-native-flash-message';
+import {launchImageLibrary} from 'react-native-image-picker';
 import {useDispatch, useSelector} from 'react-redux';
 import {Button, Gap, Header, TextInput} from '../../component';
 import {useForm} from '../../utils';
 import {chooseFile} from '../../utils/imagePicker';
 const SignUp = ({navigation}) => {
   const [filePath, setFilePath] = useState({});
-
+  console.log(filePath.uri);
   const {page, container, photoContainer, addPhoto, borderPhoto, photo} =
     styles;
   const [form, setForm] = useForm({
@@ -30,25 +32,62 @@ const SignUp = ({navigation}) => {
     dispatch({type: 'SET_REGISTER', value: form});
     navigation.navigate('SignUpAdress');
   };
-
-  const PickImage = () => {
-    chooseFile('photo', setFilePath);
-    const dataImage = {
-      uri: filePath.uri,
-      type: filePath.type,
-      name: filePath.fileName,
+  const chooseFile = type => {
+    let options = {
+      mediaType: type,
+      maxWidth: 200,
+      maxHeight: 200,
+      quality: 0.4,
     };
-    dispatch({type: 'SET_PHOTO', value: dataImage});
-    dispatch({type: 'SET_UPLOAD_STATUS', value: true});
+    launchImageLibrary(options, response => {
+      console.log('Response = ', response);
+      if (response.didCancel) {
+        showMessage('User cancel pick image');
+        return;
+      } else if (response.errorCode == 'camera_unavailable') {
+        showMessage('Camera not available in your device');
+        return;
+      } else if (response.errorCode == 'permission') {
+        showMessage('Permission not satisfied');
+        return;
+      } else if (response.errorCode == 'others') {
+        showMessage(response.errorMessage);
+        return;
+      }
+      console.log('base64 -> ', response.base64);
+      console.log('uri -> ', response.assets[0]);
+      console.log('width -> ', response.width);
+      console.log('height -> ', response.height);
+      console.log('fileSize -> ', response.fileSize);
+      console.log('type -> ', response.type);
+      console.log('fileName -> ', response.fileName);
+      setFilePath(response.assets[0]);
+      const dataImage = {
+        uri: response.assets[0].uri,
+        type: response.assets[0].type,
+        name: response.assets[0].fileName,
+      };
+      console.log(dataImage);
+      dispatch({type: 'SET_PHOTO', value: dataImage});
+      dispatch({type: 'SET_UPLOAD_STATUS', value: true});
+    });
   };
+
+  // const PickImage = async () => {
+  //   console.log('ini', chooseFile('photo', setFilePath));
+  // };
 
   return (
     <ScrollView contentContainerStyle={{flexGrow: 1}}>
       <View styles={page}>
-        <Header title="Sign Up" subTitle="Register and eat" onBack={true} />
+        <Header
+          title="Sign Up"
+          subTitle="Register and eat"
+          onBack={() => navigation.goBack()}
+        />
         <View style={container}>
           <View style={photo}>
-            <TouchableOpacity onPress={() => PickImage()}>
+            <TouchableOpacity onPress={() => chooseFile('photo')}>
               <View style={borderPhoto}>
                 {filePath ? (
                   <Image

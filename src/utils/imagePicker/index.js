@@ -89,8 +89,9 @@ const chooseFile = (type, setFilePath) => {
     mediaType: type,
     maxWidth: 200,
     maxHeight: 200,
-    quality: 0.5,
+    quality: 0.4,
   };
+  let data = '';
   launchImageLibrary(options, response => {
     console.log('Response = ', response);
     if (response.didCancel) {
@@ -107,14 +108,14 @@ const chooseFile = (type, setFilePath) => {
       return;
     }
     console.log('base64 -> ', response.base64);
-    console.log('uri -> ', response.uri);
+    console.log('uri -> ', response.assets[0]);
     console.log('width -> ', response.width);
     console.log('height -> ', response.height);
     console.log('fileSize -> ', response.fileSize);
     console.log('type -> ', response.type);
     console.log('fileName -> ', response.fileName);
-    return setFilePath(response.assets[0]);
   });
+  return data;
 };
 
 export {captureImage, chooseFile};
