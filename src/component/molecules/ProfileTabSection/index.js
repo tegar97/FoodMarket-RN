@@ -41,12 +41,19 @@ const renderTabBar = props => (
 );
 const Account = () => {
   const navigation = useNavigation();
+
+  const signOut = () => {
+    AsyncStorage.multiRemove(['userProfile', 'token']).then(() => {
+      navigation.reset({index: 0, routes: [{name: 'SignIn'}]});
+    });
+  };
   return (
     <View style={{paddingTop: 8, paddingHorizontal: 24}}>
       <ItemListMenu text="Edit Profile" />
       <ItemListMenu text="Home Adress" />
       <ItemListMenu text="Security" />
       <ItemListMenu text="Payments" />
+      <ItemListMenu text="SignOut" onPress={() => signOut()} />
     </View>
   );
 };
@@ -69,6 +76,7 @@ const renderScene = SceneMap({
   2: FoodMarket,
 });
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ProfileTabSection = () => {
   const layout = useWindowDimensions();

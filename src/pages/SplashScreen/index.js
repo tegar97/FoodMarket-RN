@@ -2,12 +2,20 @@
 import React, {useEffect} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import {Logo} from '../../assets';
+import {getData} from '../../utils';
 const SplashScreen = ({navigation}) => {
   useEffect(() => {
     setTimeout(() => {
-      navigation.navigate('SignIn');
+      getData('token').then(res => {
+        if (res) {
+          navigation.reset({index: 0, routes: [{name: 'MainApp'}]});
+        } else {
+          navigation.replace('SignIn');
+        }
+      });
     }, 2000);
   }, [navigation]);
+
   const {container, mainText} = styles;
   return (
     <View style={container}>
