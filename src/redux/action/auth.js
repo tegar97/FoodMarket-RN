@@ -1,10 +1,9 @@
 import Axios from 'axios';
 import {showMessage} from 'react-native-flash-message';
+import {API_HOST} from '../../config';
 import {storeData} from '../../utils';
 import {setLoading} from './global';
-const API_HOST = {
-  url: 'http://10.0.2.2:8000/api',
-};
+
 export const signUpAction =
   (dataRegister, photoReducer, navigation) => dispatch => {
     Axios.post(`${API_HOST.url}/register`, dataRegister)
