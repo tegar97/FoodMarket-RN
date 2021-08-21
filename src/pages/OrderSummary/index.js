@@ -3,7 +3,8 @@ import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {FoodDummy1} from '../../assets';
 import {Button, Header, ItemListFood, ItemValue} from '../../component';
 
-const OrderSummary = ({navigation}) => {
+const OrderSummary = ({navigation, route}) => {
+  const {item, transaction, userProfile} = route.params;
   return (
     <ScrollView>
       <View>
@@ -15,29 +16,38 @@ const OrderSummary = ({navigation}) => {
         <View style={styles.content}>
           <Text style={styles.label}>Order Summary</Text>
           <ItemListFood
-            image={FoodDummy1}
+            image={{uri: `http://10.0.2.2:8000/storage/${item.picturePath}`}}
             type="order-summary"
-            name="Sop Bumil"
-            price="300.000"
-            items={13}
+            name={item.name}
+            price={item.price}
+            items={item.totalItem}
           />
           <Text style={styles.label}>Detail Transaction</Text>
-          <ItemValue label="Cherry Healthy" value="IDR 18.390.00" />
-          <ItemValue label="Driver" value="value" />
-          <ItemValue label="Tax 10%" value="IDR 1.800.390" />
           <ItemValue
+            label={item.name}
+            value={transaction.totalPrice}
+            type="currency"
+          />
+          <ItemValue
+            label="Driver"
+            value={transaction.Driver}
+            type="currency"
+          />
+          <ItemValue label="Tax 10%" value={transaction.tax} type="currency" />
+          <ItemValue
+            type="currency"
             label="Total Price"
             valueColor="#1ABC9C"
-            value="IDR 390.803.000"
+            value={transaction.total}
           />
         </View>
         <View style={styles.content}>
           <Text style={styles.label}>Deliver to : </Text>
-          <ItemValue label="Name" value="Tegar Akmal" />
-          <ItemValue label="Phone No." value="085125125" />
-          <ItemValue label="Adress" value="Setara Duta Palima" />
-          <ItemValue label="House Now" value="A5 Hook" />
-          <ItemValue label="City" value="Bandung" />
+          <ItemValue label="Name" value={userProfile.name} />
+          <ItemValue label="Phone No." value={userProfile.phoneNumber} />
+          <ItemValue label="Adress" value={userProfile.address} />
+          <ItemValue label="House Now" value={userProfile.houseNumber} />
+          <ItemValue label="City" value={userProfile.city} />
         </View>
         <View style={styles.button}>
           <Button
