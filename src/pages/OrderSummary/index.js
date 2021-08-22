@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {FoodDummy1} from '../../assets';
 import {
@@ -20,15 +20,11 @@ const OrderSummary = ({navigation, route}) => {
   const [isPaymentOpen, setIsPaymentOpen] = useState(false);
 
   const [paymentUrl, setPaymentUrl] = useState('');
-  useEffect(() => {
-    getData('token').then(res => {
-      setToken(res.value);
-    });
-  }, []);
+
   const onNavChange = state => {
     const titleWeb = 'Example Domain';
     if (state.title === titleWeb) {
-      navigation.replace('SuccessOrder');
+      navigation.reset({index: 0, routes: [{name: 'SuccessOrder'}]});
     }
   };
   const onCheckout = () => {
@@ -39,21 +35,22 @@ const OrderSummary = ({navigation, route}) => {
       total: transaction.total,
       status: 'PENDING',
     };
-
-    axios
-      .post(`${API_HOST.url}/checkout`, data, {
-        headers: {
-          Authorization: token,
-        },
-      })
-      .then(res => {
-        console.log('checkout success', res.data);
-        setIsPaymentOpen(true);
-        setPaymentUrl(res.data.data.payment_url);
-      })
-      .catch(err => {
-        console.log('err', err);
-      });
+    getData('token').then(resToken => {
+      axios
+        .post(`${API_HOST.url}/checkout`, data, {
+          headers: {
+            Authorization: resToken.value,
+          },
+        })
+        .then(res => {
+          console.log('checkout success', res.data);
+          setIsPaymentOpen(true);
+          setPaymentUrl(res.data.data.payment_url);
+        })
+        .catch(err => {
+          console.log('err', err);
+        });
+    });
   };
   if (isPaymentOpen) {
     return (

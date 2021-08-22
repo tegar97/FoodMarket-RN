@@ -1,13 +1,22 @@
-import React, {useState} from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 import {Header, OrderTabSection} from '../../component';
 import EmptyOrder from '../../component/molecules/EmptyOrder';
+import {getOrders} from '../../redux/action';
 
 const Order = () => {
   const [isEmpty] = useState(false);
+  const dispatch = useDispatch();
+
+  const {orders} = useSelector(state => state.orderReducer);
+  useEffect(() => {
+    dispatch(getOrders());
+  }, []);
   return (
     <View style={styles.page}>
-      {isEmpty ? (
+      {orders.length < 1 ? (
         <EmptyOrder />
       ) : (
         <View style={styles.content}>

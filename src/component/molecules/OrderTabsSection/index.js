@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -40,45 +41,30 @@ const renderTabBar = props => (
 );
 const InProgress = () => {
   const navigation = useNavigation();
+
+  const dispatch = useDispatch();
+  const {inProgress} = useSelector(state => state.orderReducer);
+  useEffect(() => {
+    dispatch(getInProgress());
+  }, []);
   return (
     <ScrollView>
       <View style={{paddingTop: 8, paddingHorizontal: 24}}>
-        <ItemListFood
-          image={FoodDummy1}
-          rating={3}
-          onPress={() => navigation.navigate('OrderDetail')}
-          type="past-orders"
-          items={3}
-          price="2.000.000"
-          name="Sop bumil"
-        />
-        <ItemListFood
-          image={FoodDummy2}
-          rating={3}
-          onPress={() => navigation.navigate('OrderDetail')}
-          type="in-progress"
-          items={3}
-          price="2.000.000"
-          name="Sop bumil"
-        />
-        <ItemListFood
-          image={FoodDummy3}
-          rating={3}
-          onPress={() => navigation.navigate('OrderDetail')}
-          type="in-progress"
-          items={3}
-          price="2.000.000"
-          name="Sop bumil"
-        />
-        <ItemListFood
-          image={FoodDummy3}
-          rating={3}
-          onPress={() => navigation.navigate('OrderDetail')}
-          type="in-progress"
-          items={3}
-          price="2.000.000"
-          name="Sop bumil"
-        />
+        {inProgress.map(order => {
+          return (
+            <ItemListFood
+              key={order.id}
+              image={{
+                uri: `http://10.0.2.2:8000/storage/${order.food.picturePath}`,
+              }}
+              onPress={() => navigation.navigate('OrderDetail', order)}
+              type="in-progress"
+              items={order.quantity}
+              price={order.total}
+              name={order.food.name}
+            />
+          );
+        })}
       </View>
     </ScrollView>
   );
@@ -86,53 +72,32 @@ const InProgress = () => {
 
 const PastOrder = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const {pastOrders} = useSelector(state => state.orderReducer);
+  useEffect(() => {
+    dispatch(getPastOrder());
+  }, []);
 
   return (
     <ScrollView>
       <View style={{paddingTop: 8, paddingHorizontal: 24}}>
-        <ItemListFood
-          image={FoodDummy1}
-          rating={3}
-          onPress={() => navigation.navigate('OrderDetail')}
-          type="past-orders"
-          items={3}
-          price="2.000.000"
-          name="Sop bumil"
-          date="jun 12 , 14:00"
-        />
-        <ItemListFood
-          image={FoodDummy2}
-          rating={3}
-          onPress={() => navigation.navigate('OrderDetail')}
-          type="past-orders"
-          items={3}
-          price="2.000.000"
-          name="Sop bumil"
-          date="jun 11 , 11:00"
-          status="Cancel"
-        />
-        <ItemListFood
-          image={FoodDummy3}
-          rating={3}
-          onPress={() => navigation.navigate('OrderDetail')}
-          type="past-orders"
-          items={3}
-          price="2.000.000"
-          name="Sop bumil"
-          date="jun 11 , 11:00"
-          status="Cancel"
-        />
-        <ItemListFood
-          image={FoodDummy3}
-          rating={3}
-          onPress={() => navigation.navigate('OrderDetail')}
-          type="past-orders"
-          items={3}
-          price="2.000.000"
-          date="jun 15 , 11:00"
-          status="Cancel"
-          name="Sop bumil"
-        />
+        {pastOrders.map(order => {
+          return (
+            <ItemListFood
+              key={order.id}
+              image={{
+                uri: `http://10.0.2.2:8000/storage/${order.food.picturePath}`,
+              }}
+              onPress={() => navigation.navigate('OrderDetail', order)}
+              type="past-orders"
+              items={order.quantity}
+              price={order.total}
+              name={order.food.name}
+              date={order.created_at}
+              status={order.status}
+            />
+          );
+        })}
       </View>
     </ScrollView>
   );
@@ -143,6 +108,8 @@ const renderScene = SceneMap({
   2: PastOrder,
 });
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
+import {useDispatch, useSelector} from 'react-redux';
+import {getInProgress, getPastOrder} from '../../../redux/action';
 
 const OrderTabSection = () => {
   const layout = useWindowDimensions();

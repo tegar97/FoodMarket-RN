@@ -50,19 +50,28 @@ const ItemListFood = ({
           <React.Fragment>
             <View style={styles.content}>
               <Text style={styles.title}>{name}</Text>
-              <Number number={price} style={styles.price} />
+              <View style={styles.row}>
+                <Text style={styles.price}>{items} items</Text>
+                <View style={styles.dot} />
+                <Number number={price} style={styles.price} />
+              </View>
             </View>
           </React.Fragment>
         );
       case 'past-orders':
+        const formatedDate = new Date(date).toDateString();
         return (
           <React.Fragment>
             <View style={styles.content}>
               <Text style={styles.title}>{name}</Text>
-              <Number number={price} style={styles.price} />
+              <View style={styles.row}>
+                <Text style={styles.price}>{items} items</Text>
+                <View style={styles.dot} />
+                <Number number={price} style={styles.price} />
+              </View>
             </View>
             <View>
-              <Text style={styles.date}>{date}</Text>
+              <Text style={styles.date}>{formatedDate}</Text>
               <Text style={styles.status}>{status}</Text>
             </View>
           </React.Fragment>
@@ -72,6 +81,7 @@ const ItemListFood = ({
           <React.Fragment>
             <View style={styles.content}>
               <Text style={styles.title}>{name}</Text>
+
               <Number number={price} style={styles.price} />
             </View>
             <Rating />
@@ -132,5 +142,17 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontFamily: 'Poppins-Regular',
     color: '#D9435E',
+  },
+
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  dot: {
+    width: 3,
+    height: 3,
+    borderRadius: 3,
+    backgroundColor: '#8D92A3',
+    marginHorizontal: 4,
   },
 });
